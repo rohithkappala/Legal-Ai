@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+{% block title %}Select Location{% endblock %}
+{% block content %}
+
+<div class="page-header">
+  <div class="container">
+    <div class="breadcrumb"><a href="/">Home</a> › Find Lawyers</div>
+    <h1 class="page-title">Select Your Location</h1>
+    <p class="page-sub">Choose a city to find lawyers and courts near you</p>
+  </div>
+</div>
+
+<div class="container">
+  <div class="location-search-card">
+    <form method="POST" action="/show_lawyers">
+      <label class="form-label">Search by city</label>
+      <input type="text" class="form-input" placeholder="Type your city..." style="margin-bottom:1rem;">
+      <label class="form-label">Or select from list</label>
+      <select name="location" class="form-input" style="font-size:15px;height:48px;">
+        {% for city in cities %}
+          <option value="{{ city }}">{{ city }}</option>
+        {% endfor %}
+      </select>
+      <button type="submit" class="btn btn-gold btn-lg" style="margin-top:1.25rem;width:100%;">
+        🔍 Find Lawyers & Courts →
+      </button>
+    </form>
+  </div>
+
+  <!-- CITY CARDS -->
+  <h3 style="margin-bottom:1rem;color:var(--navy);font-family:var(--font-heading);">Popular Cities</h3>
+  <div class="city-grid">
+    {% for city in cities %}
+      <form method="POST" action="/show_lawyers">
+        <input type="hidden" name="location" value="{{ city }}">
+        <button type="submit" class="city-card">
+          <div class="city-icon">🏙️</div>
+          <div class="city-name">{{ city }}</div>
+          <div class="city-arrow">→</div>
+        </button>
+      </form>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}

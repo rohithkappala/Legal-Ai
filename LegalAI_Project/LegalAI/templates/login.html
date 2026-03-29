@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+{% block title %}Login{% endblock %}
+{% block content %}
+
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="auth-logo">⚖️</div>
+    <h2 class="auth-title">Welcome Back</h2>
+    <p class="auth-sub">Sign in to your LegalAI account</p>
+
+    <div class="role-tabs">
+      <button class="role-tab active" onclick="setRole(this,'user')">👤 User</button>
+      <button class="role-tab" onclick="setRole(this,'student')">🎓 Student</button>
+      <button class="role-tab" onclick="setRole(this,'lawyer')">⚖️ Lawyer</button>
+    </div>
+
+    <form method="POST" action="/login">
+      <div class="form-group">
+        <label class="form-label">Username</label>
+        <input type="text" name="username" class="form-input" placeholder="Enter your username" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input type="password" name="password" class="form-input" placeholder="••••••••" required>
+      </div>
+      <div class="form-row-space">
+        <label class="checkbox-label">
+          <input type="checkbox"> Remember me
+        </label>
+        <a href="#" class="forgot-link">Forgot password?</a>
+      </div>
+      <button type="submit" class="btn btn-primary btn-full">Sign In</button>
+    </form>
+
+    <div class="auth-divider"><span>or</span></div>
+    <a href="/register" class="btn btn-outline btn-full">Create New Account</a>
+    <p class="auth-switch">Don't have an account? <a href="/register">Register here</a></p>
+  </div>
+</div>
+
+<script>
+function setRole(el, role) {
+  document.querySelectorAll('.role-tab').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+}
+</script>
+{% endblock %}

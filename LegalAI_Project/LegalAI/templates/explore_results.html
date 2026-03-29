@@ -1,0 +1,86 @@
+{% extends "layout.html" %}
+{% block title %}Lawyers in {{ location }}{% endblock %}
+{% block content %}
+
+<div class="page-header">
+  <div class="container">
+    <div class="breadcrumb"><a href="/">Home</a> › <a href="/explore">Find Lawyers</a> › {{ location }}</div>
+    <h1 class="page-title">Lawyers in {{ location }}</h1>
+    <p class="page-sub">Verified advocates specialising in your case type</p>
+  </div>
+</div>
+
+<div class="container">
+  <!-- FILTER ROW -->
+  <div class="filter-row">
+    <span class="filter-label">Filter by specialisation:</span>
+    <button class="filter-btn active">All</button>
+    <button class="filter-btn">Property</button>
+    <button class="filter-btn">Criminal</button>
+    <button class="filter-btn">Family</button>
+    <button class="filter-btn">Consumer</button>
+    <button class="filter-btn">Labour</button>
+  </div>
+
+  <div class="results-layout">
+    <!-- LAWYERS COLUMN -->
+    <div class="lawyers-list">
+      {% if lawyers %}
+        {% for lawyer in lawyers %}
+          <div class="lawyer-card">
+            <div class="lawyer-avatar">{{ lawyer.name.split('.')[1][1] if '.' in lawyer.name else lawyer.name[0] }}</div>
+            <div class="lawyer-info">
+              <div class="lawyer-name">{{ lawyer.name }}</div>
+              <div class="lawyer-spec">{{ lawyer.spec }}</div>
+              <div class="lawyer-meta-row">
+                <span class="meta-badge">{{ lawyer.exp }} yrs exp.</span>
+                <span class="stars">{% for i in range(5) %}{% if i < lawyer.rating|int %}★{% else %}☆{% endif %}{% endfor %}</span>
+                <span class="rating-num">{{ lawyer.rating }} ({{ lawyer.cases }} cases)</span>
+              </div>
+              <div class="lawyer-details-row">
+                <span class="detail-item">🏛 {{ lawyer.court }}</span>
+                <span class="detail-item">💰 ₹{{ lawyer.fee }} / consult</span>
+                <span class="detail-item">📞 {{ lawyer.phone }}</span>
+              </div>
+              <!-- BOOKING FORM -->
+              <div class="lawyer-actions">
+                <form method="POST" action="/book" style="display:inline;">
+                  <input type="hidden" name="lawyer_name" value="{{ lawyer.name }}">
+                  <input type="hidden" name="location" value="{{ location }}">
+                  <input type="hidden" name="message" value="Consultation request">
+                  <button type="submit" class="btn btn-primary">📅 Book Consultation</button>
+                </form>
+                <a href="tel:{{ lawyer.phone }}" class="btn btn-outline">📞 Contact</a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="empty-state">
+          <p>No lawyers registered in this location yet.</p>
+          <a href="/explore" class="btn btn-gold">Try another city →</a>
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- COURTS SIDEBAR -->
+    <div class="courts-sidebar">
+      <div class="courts-card">
+        <h4 class="courts-title">🏛 Courts in {{ location }}</h4>
+        {% for court in courts %}
+          <div class="court-item">
+            <span class="court-icon">⚖</span>
+            <span>{{ court }}</span>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="sidebar-help-card">
+        <h4>Need help choosing?</h4>
+        <p>Our AI can match you with the right lawyer based on your case type.</p>
+        <a href="/" class="btn btn-gold btn-full">Analyse My Case</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

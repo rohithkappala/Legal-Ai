@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+{% block title %}Case Analysis Result{% endblock %}
+{% block content %}
+
+<div class="page-header">
+  <div class="container">
+    <div class="breadcrumb"><a href="/">Home</a> › Case Analysis</div>
+    <h1 class="page-title">Case Analysis Results</h1>
+    <p class="page-sub">AI-powered analysis based on Indian legal frameworks</p>
+  </div>
+</div>
+
+<div class="container">
+  <div class="alert alert-success">✅ Analysis complete — your case has been classified successfully.</div>
+
+  <!-- RESULT CARDS -->
+  <div class="result-grid">
+    <div class="result-card">
+      <div class="result-icon">⚖️</div>
+      <div class="result-label">Case Type</div>
+      <div class="result-value">{{ category|title }}</div>
+      <div class="result-sub">Based on case description</div>
+    </div>
+    <div class="result-card result-card-accent">
+      <div class="result-icon">🏛️</div>
+      <div class="result-label">Recommended Court</div>
+      <div class="result-value">{{ court }}</div>
+      <div class="result-sub">Appropriate jurisdiction</div>
+    </div>
+    <div class="result-card">
+      <div class="result-icon">📊</div>
+      <div class="result-label">Case Complexity</div>
+      <div class="result-value">{{ complexity }}</div>
+      <div class="result-sub">Estimated from case details</div>
+    </div>
+  </div>
+
+  <!-- CASE SUMMARY -->
+  <div class="card">
+    <h3 class="card-title">📝 Your Case Summary</h3>
+    <p class="case-text-display">{{ case_text }}</p>
+  </div>
+
+  <!-- ACTION BUTTONS -->
+  <div class="action-row">
+    <a href="/" class="btn btn-outline">← Submit Another Case</a>
+    <a href="/more_info/{{ category }}" class="btn btn-gold btn-lg">More Information →</a>
+  </div>
+</div>
+
+{% endblock %}

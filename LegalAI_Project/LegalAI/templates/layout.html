@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}LegalAI{% endblock %} — AI Legal Assistance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="navbar">
+  <a href="/" class="nav-logo">⚖ LegalAI</a>
+  <div class="nav-right">
+    {% if session.get('user') %}
+      <span class="nav-role-badge role-{{ session.get('role','user') }}">{{ session.get('role','user')|title }}</span>
+      <div class="nav-dropdown">
+        <button class="nav-user-btn">
+          <span class="nav-avatar">{{ (session.get('first_name','U'))[0]|upper }}</span>
+          {{ session.get('first_name', session.get('user')) }} ▾
+        </button>
+        <div class="dropdown-menu">
+          <a href="/profile">👤 My Profile</a>
+          <a href="/dashboard">📊 Dashboard</a>
+          {% if session.get('role') == 'lawyer' %}
+          <a href="/lawyer_dashboard">⚖ Lawyer Panel</a>
+          {% endif %}
+          {% if session.get('role') == 'student' %}
+          <a href="/student_dashboard">🎓 Learning Panel</a>
+          {% endif %}
+          <div class="dropdown-divider"></div>
+          <a href="/logout" class="dropdown-danger">🚪 Logout</a>
+        </div>
+      </div>
+    {% else %}
+      <a href="/login" class="btn btn-outline-nav">Login</a>
+      <a href="/register" class="btn btn-gold-nav">Register</a>
+    {% endif %}
+  </div>
+</nav>
+
+<!-- FLASH MESSAGES -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="flash-container">
+      {% for category, message in messages %}
+        <div class="flash flash-{{ category }}">{{ message }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+<!-- PAGE CONTENT -->
+<main>
+{% block content %}{% endblock %}
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">⚖ LegalAI &nbsp;·&nbsp; AI-Powered Legal Assistance Platform</div>
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="/explore">Find Lawyers</a>
+      <a href="/login">Login</a>
+      <a href="/register">Register</a>
+    </div>
+    <div class="footer-note">For informational purposes only. Not a substitute for professional legal advice.</div>
+  </div>
+</footer>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

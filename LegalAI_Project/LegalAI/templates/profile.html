@@ -1,0 +1,93 @@
+{% extends "layout.html" %}
+{% block title %}My Profile{% endblock %}
+{% block content %}
+
+<div class="page-header">
+  <div class="container">
+    <h1 class="page-title">My Profile</h1>
+    <p class="page-sub">Manage your account and view activity</p>
+  </div>
+</div>
+
+<div class="container">
+  <div class="profile-layout">
+
+    <!-- LEFT: PROFILE CARD -->
+    <div class="profile-sidebar">
+      <div class="profile-card">
+        <div class="profile-avatar-lg">
+          {{ (user['first_name'] or user['username'])[0]|upper }}
+        </div>
+        <h3 class="profile-name">{{ user['first_name'] or '' }} {{ user['last_name'] or '' }}</h3>
+        <p class="profile-username">@{{ user['username'] }}</p>
+        <span class="role-badge role-{{ user['role'] }}">{{ user['role']|title }}</span>
+        <div class="profile-meta">
+          {% if user['email'] %}<div class="profile-meta-item">📧 {{ user['email'] }}</div>{% endif %}
+          {% if user['phone'] %}<div class="profile-meta-item">📞 {{ user['phone'] }}</div>{% endif %}
+          {% if user['location'] %}<div class="profile-meta-item">📍 {{ user['location'] }}</div>{% endif %}
+          {% if user['gender'] %}<div class="profile-meta-item">👤 {{ user['gender'] }}</div>{% endif %}
+        </div>
+        {% if user['role'] == 'lawyer' and user['specialisation'] %}
+          <div class="profile-spec-badge">⚖ {{ user['specialisation'] }}</div>
+        {% endif %}
+        {% if user['role'] == 'student' and user['university'] %}
+          <div class="profile-spec-badge">🎓 {{ user['university'] }}</div>
+        {% endif %}
+        <a href="/dashboard" class="btn btn-primary btn-full" style="margin-top:1rem;">View Dashboard</a>
+      </div>
+    </div>
+
+    <!-- RIGHT: ACTIVITY -->
+    <div class="profile-main">
+
+      <!-- RECENT CASES -->
+      <div class="card">
+        <h3 class="card-title">📋 Recent Case Analyses</h3>
+        {% if cases %}
+          {% for case in cases %}
+            <div class="activity-item">
+              <div class="activity-meta">
+                <span class="badge badge-{{ case['category'] }}">{{ case['category']|title }}</span>
+                <span class="activity-date">{{ case['created_at'][:10] }}</span>
+              </div>
+              <p class="activity-text">{{ case['case_text'][:120] }}...</p>
+              <div class="activity-tags">
+                <span class="tag">🏛 {{ case['court'] }}</span>
+                <span class="tag">📊 {{ case['complexity'] }} complexity</span>
+              </div>
+            </div>
+          {% endfor %}
+        {% else %}
+          <div class="empty-state">
+            <p>No cases analysed yet.</p>
+            <a href="/" class="btn btn-gold">Analyse a Case →</a>
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- BOOKINGS -->
+      <div class="card">
+        <h3 class="card-title">📅 My Bookings</h3>
+        {% if bookings %}
+          {% for b in bookings %}
+            <div class="activity-item">
+              <div class="activity-meta">
+                <span class="badge badge-pending">{{ b['status']|title }}</span>
+                <span class="activity-date">{{ b['created_at'][:10] }}</span>
+              </div>
+              <p class="activity-text"><strong>{{ b['lawyer_name'] }}</strong> — {{ b['location'] }}</p>
+            </div>
+          {% endfor %}
+        {% else %}
+          <div class="empty-state">
+            <p>No bookings yet.</p>
+            <a href="/explore" class="btn btn-gold">Find Lawyers →</a>
+          </div>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

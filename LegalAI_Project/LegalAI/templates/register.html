@@ -1,0 +1,169 @@
+{% extends "layout.html" %}
+{% block title %}Register{% endblock %}
+{% block content %}
+
+<div class="auth-page" style="padding: 2rem 1rem;">
+  <div class="auth-card" style="max-width:520px;">
+    <div class="auth-logo">⚖️</div>
+    <h2 class="auth-title">Create Account</h2>
+    <p class="auth-sub">Join LegalAI for free legal guidance</p>
+
+    <!-- ROLE SELECTOR -->
+    <div class="role-selector">
+      <label class="role-option">
+        <input type="radio" name="role_select" value="user" checked onchange="showFields('user')">
+        <div class="role-option-card">
+          <span class="role-option-icon">👤</span>
+          <span class="role-option-label">User</span>
+          <span class="role-option-desc">Need legal help</span>
+        </div>
+      </label>
+      <label class="role-option">
+        <input type="radio" name="role_select" value="student" onchange="showFields('student')">
+        <div class="role-option-card">
+          <span class="role-option-icon">🎓</span>
+          <span class="role-option-label">Student</span>
+          <span class="role-option-desc">Law student</span>
+        </div>
+      </label>
+      <label class="role-option">
+        <input type="radio" name="role_select" value="lawyer" onchange="showFields('lawyer')">
+        <div class="role-option-card">
+          <span class="role-option-icon">⚖️</span>
+          <span class="role-option-label">Lawyer</span>
+          <span class="role-option-desc">Legal professional</span>
+        </div>
+      </label>
+    </div>
+
+    <form method="POST" action="/register">
+      <input type="hidden" name="role" id="roleValue" value="user">
+
+      <!-- COMMON FIELDS -->
+      <div class="form-row-2">
+        <div class="form-group">
+          <label class="form-label">First Name *</label>
+          <input type="text" name="first_name" class="form-input" placeholder="Arjun" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Last Name</label>
+          <input type="text" name="last_name" class="form-input" placeholder="Sharma">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Username *</label>
+        <input type="text" name="username" class="form-input" placeholder="arjun_sharma" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email Address *</label>
+        <input type="email" name="email" class="form-input" placeholder="you@email.com" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Phone Number</label>
+        <input type="tel" name="phone" class="form-input" placeholder="+91 98765 43210">
+      </div>
+      <div class="form-row-2">
+        <div class="form-group">
+          <label class="form-label">Date of Birth</label>
+          <input type="date" name="dob" class="form-input">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Gender</label>
+          <select name="gender" class="form-input">
+            <option value="">Select</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Non-binary</option>
+            <option>Prefer not to say</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">City / Location</label>
+        <select name="location" class="form-input">
+          <option value="">Select city</option>
+          <option>Hyderabad</option>
+          <option>Delhi</option>
+          <option>Mumbai</option>
+          <option>Bengaluru</option>
+          <option>Chennai</option>
+        </select>
+      </div>
+
+      <!-- USER FIELDS -->
+      <div id="fields-user">
+        <div class="form-group">
+          <label class="form-label">Occupation</label>
+          <input type="text" name="occupation" class="form-input" placeholder="e.g. Teacher, Business Owner">
+        </div>
+      </div>
+
+      <!-- LAWYER FIELDS -->
+      <div id="fields-lawyer" style="display:none;">
+        <div class="form-group">
+          <label class="form-label">Bar Council Enrollment No.</label>
+          <input type="text" name="bar_number" class="form-input" placeholder="BCI/AP/XXXX/XXXX">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Specialisation</label>
+          <select name="specialisation" class="form-input">
+            <option>Property Law</option>
+            <option>Criminal Law</option>
+            <option>Family Law</option>
+            <option>Consumer Law</option>
+            <option>Corporate Law</option>
+            <option>Cyber Law</option>
+            <option>Labour Law</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- STUDENT FIELDS -->
+      <div id="fields-student" style="display:none;">
+        <div class="form-group">
+          <label class="form-label">Law School / University</label>
+          <input type="text" name="university" class="form-input" placeholder="e.g. NALSAR University of Law">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Year of Study</label>
+          <select class="form-input">
+            <option>1st Year</option><option>2nd Year</option>
+            <option>3rd Year</option><option>4th Year</option><option>5th Year / Final</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- PASSWORD -->
+      <div class="form-group">
+        <label class="form-label">Password *</label>
+        <input type="password" name="password" class="form-input" placeholder="Min. 8 characters" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Confirm Password *</label>
+        <input type="password" class="form-input" placeholder="Repeat password" required>
+      </div>
+
+      <label class="checkbox-label" style="margin-bottom:1.25rem;">
+        <input type="checkbox" required>
+        I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+      </label>
+
+      <button type="submit" class="btn btn-primary btn-full">Create Account</button>
+    </form>
+
+    <p class="auth-switch">Already have an account? <a href="/login">Sign in</a></p>
+  </div>
+</div>
+
+<script>
+function showFields(role) {
+  document.getElementById('roleValue').value = role;
+  ['user','lawyer','student'].forEach(r => {
+    document.getElementById('fields-'+r).style.display = r === role ? 'block' : 'none';
+  });
+  document.querySelectorAll('.role-option-card').forEach(c => c.classList.remove('selected'));
+  event.currentTarget.closest('.role-option').querySelector('.role-option-card').classList.add('selected');
+}
+document.querySelector('.role-option-card').classList.add('selected');
+</script>
+{% endblock %}

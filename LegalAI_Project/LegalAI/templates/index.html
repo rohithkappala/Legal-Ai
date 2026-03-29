@@ -1,0 +1,116 @@
+{% extends "layout.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">🇮🇳 India's Trusted Legal Guide</div>
+  <h1 class="hero-title">Navigate the Law<br><span class="hero-accent">with Confidence</span></h1>
+  <p class="hero-sub">Describe your situation — our AI analyses it, identifies the right court, and connects you with verified lawyers near you.</p>
+
+  <!-- CASE INPUT FORM -->
+  <div class="case-form-card">
+    <h3 class="case-form-title">Describe Your Legal Situation</h3>
+    <form method="POST" action="/">
+      <textarea name="case_summary" class="case-textarea" rows="5"
+        placeholder="Example: My neighbour illegally occupied my land and refuses to vacate. I have the property documents but he has been threatening me..."
+        required></textarea>
+      <div class="case-form-bottom">
+        <span class="case-hint">Be as detailed as possible for accurate results</span>
+        <button type="submit" class="btn btn-gold btn-lg">⚡ Analyse My Case →</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">HOW IT WORKS</div>
+      <h2 class="section-title">Your Legal Journey in 4 Steps</h2>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <div class="step-icon">✍️</div>
+        <h4>Describe Your Case</h4>
+        <p>Write a brief description of your legal problem in plain language.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <div class="step-icon">🤖</div>
+        <h4>AI Analysis</h4>
+        <p>Our NLP model classifies your case, recommends a court, and rates complexity.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <div class="step-icon">📄</div>
+        <h4>Get Legal Guidance</h4>
+        <p>See applicable law sections, required documents, and expert suggestions.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">04</div>
+        <div class="step-icon">🧑‍⚖️</div>
+        <h4>Find a Lawyer</h4>
+        <p>Discover verified advocates in your city and book a consultation.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section section-dark">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label light">PLATFORM FEATURES</div>
+      <h2 class="section-title light">Everything You Need</h2>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">⚖️</div>
+        <h4>AI Case Classification</h4>
+        <p>NLP-powered prediction of case type, recommended court, and complexity level.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📚</div>
+        <h4>Legal Section Finder</h4>
+        <p>Automatically maps your case to relevant IPC / CPC sections and Acts.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📋</div>
+        <h4>Document Checklist</h4>
+        <p>Know exactly which documents you need before approaching a court.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🗺️</div>
+        <h4>Location-Based Search</h4>
+        <p>Find advocates and courts in your city with verified profiles and ratings.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📅</div>
+        <h4>Consultation Booking</h4>
+        <p>Book a legal consultation directly through the platform.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎓</div>
+        <h4>Student Learning Panel</h4>
+        <p>Famous cases, IPC sections, and legal quizzes for law students.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <h2>Ready to understand your legal rights?</h2>
+    <p>Join thousands of citizens who used LegalAI to navigate the Indian legal system.</p>
+    <div class="cta-btns">
+      <a href="/register" class="btn btn-gold btn-lg">Create Free Account</a>
+      <a href="/explore" class="btn btn-outline btn-lg">Find Lawyers →</a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

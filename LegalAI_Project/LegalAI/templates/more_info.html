@@ -1,0 +1,79 @@
+{% extends "layout.html" %}
+{% block title %}Legal Information — {{ category }}{% endblock %}
+{% block content %}
+
+<div class="page-header">
+  <div class="container">
+    <div class="breadcrumb"><a href="/">Home</a> › <a href="javascript:history.back()">Results</a> › Legal Information</div>
+    <h1 class="page-title">{{ category }} Case — Legal Guidance</h1>
+    <p class="page-sub">Applicable laws, required documents, and expert suggestions</p>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- APPLICABLE LAW -->
+  <div class="info-card">
+    <div class="info-card-header">
+      <span class="info-icon">📚</span>
+      <div>
+        <h3>Applicable Law</h3>
+        <p class="info-sub">Primary legislation governing your case</p>
+      </div>
+    </div>
+    <div class="law-badge">{{ data.section }}</div>
+    <div class="law-tags">
+      {% for law in data.laws %}
+        <span class="law-tag">⚖ {{ law }}</span>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- REQUIRED DOCUMENTS -->
+  <div class="info-card">
+    <div class="info-card-header">
+      <span class="info-icon">📄</span>
+      <div>
+        <h3>Required Documents</h3>
+        <p class="info-sub">Gather these before approaching court</p>
+      </div>
+    </div>
+    <ul class="doc-list">
+      {% for doc in data.documents %}
+        <li class="doc-item">
+          <span class="doc-check">✓</span>
+          <span>{{ doc }}</span>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <!-- SUGGESTIONS -->
+  <div class="info-card">
+    <div class="info-card-header">
+      <span class="info-icon">💡</span>
+      <div>
+        <h3>Expert Suggestions</h3>
+        <p class="info-sub">Steps to take before filing your case</p>
+      </div>
+    </div>
+    <p class="suggestion-text">{{ data.suggestion }}</p>
+    <div class="complexity-note">
+      <span class="note-icon">ℹ️</span>
+      <span>{{ data.complexity_note }}</span>
+    </div>
+  </div>
+
+  <!-- CTA TO LAWYERS -->
+  <div class="cta-card">
+    <div class="cta-card-inner">
+      <div>
+        <h3>Ready to find a lawyer?</h3>
+        <p>Connect with verified advocates specialising in {{ category }} matters near you.</p>
+      </div>
+      <a href="/explore" class="btn btn-gold btn-lg">Explore Lawyers & Courts →</a>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

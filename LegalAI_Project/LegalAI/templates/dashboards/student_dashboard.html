@@ -1,0 +1,88 @@
+{% extends "layout.html" %}
+{% block title %}Student Learning Panel{% endblock %}
+{% block content %}
+
+<div class="page-header">
+  <div class="container">
+    <h1 class="page-title">Student Learning Panel 🎓</h1>
+    <p class="page-sub">Study famous cases, IPC sections, and legal concepts</p>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- FAMOUS CASES -->
+  <div class="card">
+    <h3 class="card-title">📖 Landmark Indian Cases</h3>
+    {% for case in famous_cases %}
+      <div class="case-study-item">
+        <div class="case-study-header">
+          <h4 class="case-study-title">{{ case.title }}</h4>
+          <span class="badge badge-{{ case.impact|lower }}">{{ case.impact }}</span>
+          <span class="badge">{{ case.type }}</span>
+        </div>
+        <p class="case-study-court">🏛 {{ case.court }}</p>
+        <p class="case-study-summary">{{ case.summary }}</p>
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- IPC SECTIONS -->
+  <div class="card">
+    <h3 class="card-title">⚖ Key IPC Sections</h3>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr><th>Section</th><th>Offence</th><th>Punishment</th></tr>
+        </thead>
+        <tbody>
+          {% for s in ipc_sections %}
+            <tr>
+              <td><strong class="gold-text">{{ s.section }}</strong></td>
+              <td>{{ s.title }}</td>
+              <td>{{ s.punishment }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="card">
+    <h3 class="card-title">🧠 Legal Quiz</h3>
+    <div class="quiz-container">
+      <div class="quiz-question" id="quiz-q">
+        <p class="quiz-q-text">Under which section does 'Cheating & Dishonesty' fall in IPC?</p>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="answer(this,false)">§302</button>
+          <button class="quiz-opt" onclick="answer(this,false)">§376</button>
+          <button class="quiz-opt correct" onclick="answer(this,true)">§420</button>
+          <button class="quiz-opt" onclick="answer(this,false)">§498A</button>
+        </div>
+        <p class="quiz-feedback" id="quiz-feedback" style="display:none;"></p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function answer(btn, correct) {
+  document.querySelectorAll('.quiz-opt').forEach(b => b.disabled = true);
+  const fb = document.getElementById('quiz-feedback');
+  fb.style.display = 'block';
+  if(correct) {
+    btn.style.background = '#2D7A4F'; btn.style.color = '#fff';
+    fb.textContent = '✅ Correct! §420 IPC covers Cheating & Dishonesty with up to 7 years imprisonment.';
+    fb.style.color = '#2D7A4F';
+  } else {
+    btn.style.background = '#A32D2D'; btn.style.color = '#fff';
+    document.querySelector('.correct').style.background = '#2D7A4F';
+    document.querySelector('.correct').style.color = '#fff';
+    fb.textContent = '❌ Incorrect. The correct answer is §420 — Cheating & Dishonesty.';
+    fb.style.color = '#A32D2D';
+  }
+}
+</script>
+{% endblock %}

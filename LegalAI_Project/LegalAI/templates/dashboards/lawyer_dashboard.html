@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+{% block title %}Lawyer Dashboard{% endblock %}
+{% block content %}
+
+<div class="page-header">
+  <div class="container">
+    <h1 class="page-title">Lawyer Panel ⚖</h1>
+    <p class="page-sub">Manage your client requests and appointments</p>
+  </div>
+</div>
+
+<div class="container">
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="stat-num">{{ requests|length }}</div>
+      <div class="stat-label">Total Requests</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">{{ requests|selectattr('status','equalto','pending')|list|length }}</div>
+      <div class="stat-label">Pending</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">0</div>
+      <div class="stat-label">Completed</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 class="card-title">📋 Client Requests</h3>
+    {% if requests %}
+      {% for r in requests %}
+        <div class="request-item">
+          <div class="request-meta">
+            <strong>Booking #{{ r['id'] }}</strong>
+            <span class="status-badge status-{{ r['status'] }}">{{ r['status']|title }}</span>
+            <span class="activity-date">{{ r['created_at'][:10] }}</span>
+          </div>
+          <p>{{ r['message'] }}</p>
+          <p class="muted">Location: {{ r['location'] }}</p>
+          <div class="request-actions">
+            <button class="btn btn-primary btn-sm">✅ Accept</button>
+            <button class="btn btn-outline btn-sm">❌ Decline</button>
+            <button class="btn btn-outline btn-sm">📞 Contact</button>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <div class="empty-state">
+        <p>No client requests yet. Your profile is visible to users searching in your location.</p>
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="card">
+    <h3 class="card-title">📤 Upload Case Documents</h3>
+    <form>
+      <div class="form-group">
+        <label class="form-label">Document Title</label>
+        <input type="text" class="form-input" placeholder="e.g. Property Dispute Agreement">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Select File</label>
+        <input type="file" class="form-input">
+      </div>
+      <button type="button" class="btn btn-primary">Upload Document</button>
+    </form>
+  </div>
+</div>
+
+{% endblock %}
